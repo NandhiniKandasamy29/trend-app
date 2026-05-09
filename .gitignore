@@ -5,7 +5,10 @@
 /dist
 /build
 /.pnp
-.pnp.js
+.pnp.js/
+.terraform/
+*.tfstate
+*.tfstate.*
 
 # testing
 /coverage
