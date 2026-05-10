@@ -16,9 +16,10 @@ pipeline {
         }
 
         stage('Push Docker Image') {
-            steps {
-                sh 'docker push nandhini209/trend-app:v1'
-            }
+	   steps {
+        	withDockerRegistry([ credentialsId: 'dockerhub', url: '' ]) {
+            		sh 'docker push nandhini209/trend-app:v1'
+        }
         }
     }
 }
