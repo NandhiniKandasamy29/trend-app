@@ -1,0 +1,272 @@
+Started by user Nandhini Kandasamy
+Obtained Jenkinsfile from git https://github.com/NandhiniKandasamy29/trend-app
+[Pipeline] Start of Pipeline
+[Pipeline] node
+Running on Jenkins in /var/lib/jenkins/workspace/trend-app-pipeline
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Declarative: Checkout SCM)
+[Pipeline] checkout
+Selected Git installation does not exist. Using Default
+The recommended git tool is: NONE
+No credentials specified
+ > git rev-parse --resolve-git-dir /var/lib/jenkins/workspace/trend-app-pipeline/.git # timeout=10
+Fetching changes from the remote Git repository
+ > git config remote.origin.url https://github.com/NandhiniKandasamy29/trend-app # timeout=10
+Fetching upstream changes from https://github.com/NandhiniKandasamy29/trend-app
+ > git --version # timeout=10
+ > git --version # 'git version 2.43.0'
+ > git fetch --tags --force --progress -- https://github.com/NandhiniKandasamy29/trend-app +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git rev-parse refs/remotes/origin/main^{commit} # timeout=10
+Checking out Revision 5d74ec074c1819021c5eb228f422b22f25f93839 (refs/remotes/origin/main)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f 5d74ec074c1819021c5eb228f422b22f25f93839 # timeout=10
+Commit message: "Jenkins file update"
+ > git rev-list --no-walk 5d74ec074c1819021c5eb228f422b22f25f93839 # timeout=10
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Checkout)
+[Pipeline] git
+Selected Git installation does not exist. Using Default
+The recommended git tool is: NONE
+No credentials specified
+ > git rev-parse --resolve-git-dir /var/lib/jenkins/workspace/trend-app-pipeline/.git # timeout=10
+Fetching changes from the remote Git repository
+ > git config remote.origin.url https://github.com/NandhiniKandasamy29/trend-app.git # timeout=10
+Fetching upstream changes from https://github.com/NandhiniKandasamy29/trend-app.git
+ > git --version # timeout=10
+ > git --version # 'git version 2.43.0'
+ > git fetch --tags --force --progress -- https://github.com/NandhiniKandasamy29/trend-app.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git rev-parse refs/remotes/origin/main^{commit} # timeout=10
+Checking out Revision 5d74ec074c1819021c5eb228f422b22f25f93839 (refs/remotes/origin/main)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f 5d74ec074c1819021c5eb228f422b22f25f93839 # timeout=10
+ > git branch -a -v --no-abbrev # timeout=10
+ > git branch -D main # timeout=10
+ > git checkout -b main 5d74ec074c1819021c5eb228f422b22f25f93839 # timeout=10
+Commit message: "Jenkins file update"
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Build Docker Image)
+[Pipeline] sh
++ docker build -t nandhini209/trend-store-app:latest .
+DEPRECATED: The legacy builder is deprecated and will be removed in a future release.
+            Install the buildx component to build images with BuildKit:
+            https://docs.docker.com/go/buildx/
+
+Sending build context to Docker daemon  4.554MB
+Step 1/10 : FROM node:18-alpine AS build
+ ---> 8d6421d663b4
+Step 2/10 : WORKDIR /app
+ ---> Using cache
+ ---> 5dae094c2909
+Step 3/10 : COPY package*.json ./
+ ---> Using cache
+ ---> e31e8c745ada
+Step 4/10 : RUN npm install
+ ---> Using cache
+ ---> 6aaa6e4729ac
+Step 5/10 : COPY . .
+ ---> Using cache
+ ---> 33bee40c8420
+Step 6/10 : RUN npm run build
+ ---> Using cache
+ ---> f0a70a54b056
+Step 7/10 : FROM nginx:alpine
+ ---> 5616878291a2
+Step 8/10 : COPY --from=build /app/build /usr/share/nginx/html
+ ---> Using cache
+ ---> f770abf61606
+Step 9/10 : EXPOSE 80
+ ---> Using cache
+ ---> 4c07e336dcc9
+Step 10/10 : CMD ["nginx", "-g", "daemon off;"]
+ ---> Using cache
+ ---> 225e69961f55
+Successfully built 225e69961f55
+Successfully tagged nandhini209/trend-store-app:latest
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Push Docker Image)
+[Pipeline] sh
++ docker push nandhini209/trend-store-app:latest
+The push refers to repository [docker.io/nandhini209/trend-store-app]
+1689459af05d: Waiting
+82736a35d0e7: Waiting
+453da7dbc73e: Waiting
+4a8b0b2a5b19: Waiting
+aee4e54b3865: Waiting
+6a0ac1617861: Waiting
+583599bb7d38: Waiting
+781ff50d2644: Waiting
+612c0c1df4c5: Waiting
+1689459af05d: Waiting
+82736a35d0e7: Waiting
+453da7dbc73e: Waiting
+4a8b0b2a5b19: Waiting
+aee4e54b3865: Waiting
+6a0ac1617861: Waiting
+583599bb7d38: Waiting
+781ff50d2644: Waiting
+612c0c1df4c5: Waiting
+6a0ac1617861: Waiting
+583599bb7d38: Waiting
+781ff50d2644: Waiting
+612c0c1df4c5: Waiting
+1689459af05d: Waiting
+82736a35d0e7: Waiting
+453da7dbc73e: Waiting
+4a8b0b2a5b19: Waiting
+aee4e54b3865: Waiting
+aee4e54b3865: Waiting
+6a0ac1617861: Waiting
+583599bb7d38: Waiting
+781ff50d2644: Waiting
+612c0c1df4c5: Waiting
+1689459af05d: Waiting
+82736a35d0e7: Waiting
+453da7dbc73e: Waiting
+4a8b0b2a5b19: Waiting
+1689459af05d: Waiting
+82736a35d0e7: Waiting
+453da7dbc73e: Waiting
+4a8b0b2a5b19: Waiting
+aee4e54b3865: Waiting
+6a0ac1617861: Waiting
+583599bb7d38: Waiting
+781ff50d2644: Waiting
+612c0c1df4c5: Waiting
+aee4e54b3865: Waiting
+6a0ac1617861: Waiting
+583599bb7d38: Waiting
+781ff50d2644: Waiting
+612c0c1df4c5: Waiting
+1689459af05d: Waiting
+82736a35d0e7: Waiting
+453da7dbc73e: Waiting
+4a8b0b2a5b19: Waiting
+aee4e54b3865: Waiting
+6a0ac1617861: Waiting
+583599bb7d38: Waiting
+781ff50d2644: Waiting
+612c0c1df4c5: Waiting
+1689459af05d: Waiting
+82736a35d0e7: Waiting
+453da7dbc73e: Waiting
+4a8b0b2a5b19: Waiting
+6a0ac1617861: Waiting
+583599bb7d38: Waiting
+781ff50d2644: Waiting
+612c0c1df4c5: Waiting
+1689459af05d: Waiting
+82736a35d0e7: Waiting
+453da7dbc73e: Waiting
+4a8b0b2a5b19: Waiting
+aee4e54b3865: Waiting
+1689459af05d: Waiting
+82736a35d0e7: Waiting
+453da7dbc73e: Waiting
+4a8b0b2a5b19: Waiting
+aee4e54b3865: Waiting
+6a0ac1617861: Waiting
+583599bb7d38: Waiting
+781ff50d2644: Waiting
+612c0c1df4c5: Waiting
+453da7dbc73e: Waiting
+4a8b0b2a5b19: Waiting
+aee4e54b3865: Waiting
+6a0ac1617861: Waiting
+583599bb7d38: Waiting
+781ff50d2644: Waiting
+612c0c1df4c5: Waiting
+1689459af05d: Waiting
+82736a35d0e7: Waiting
+453da7dbc73e: Waiting
+4a8b0b2a5b19: Waiting
+aee4e54b3865: Waiting
+6a0ac1617861: Waiting
+583599bb7d38: Waiting
+781ff50d2644: Waiting
+612c0c1df4c5: Layer already exists
+1689459af05d: Waiting
+82736a35d0e7: Waiting
+781ff50d2644: Waiting
+1689459af05d: Waiting
+82736a35d0e7: Waiting
+453da7dbc73e: Waiting
+4a8b0b2a5b19: Waiting
+aee4e54b3865: Waiting
+6a0ac1617861: Waiting
+583599bb7d38: Waiting
+1689459af05d: Waiting
+82736a35d0e7: Layer already exists
+453da7dbc73e: Waiting
+4a8b0b2a5b19: Waiting
+aee4e54b3865: Waiting
+6a0ac1617861: Layer already exists
+583599bb7d38: Waiting
+781ff50d2644: Waiting
+4a8b0b2a5b19: Waiting
+aee4e54b3865: Waiting
+583599bb7d38: Waiting
+781ff50d2644: Waiting
+1689459af05d: Waiting
+453da7dbc73e: Waiting
+1689459af05d: Layer already exists
+453da7dbc73e: Layer already exists
+4a8b0b2a5b19: Layer already exists
+aee4e54b3865: Layer already exists
+583599bb7d38: Layer already exists
+781ff50d2644: Layer already exists
+latest: digest: sha256:225e69961f550b7b72c1528cffc4471a7b0612fe7eb9dad51e915cd4ef644787 size: 2264
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Connect to EKS)
+[Pipeline] sh
++ aws eks update-kubeconfig --region ap-south-1 --name trend-cluster
+Updated context arn:aws:eks:ap-south-1:634747715945:cluster/trend-cluster in /var/lib/jenkins/.kube/config
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Deploy to EKS)
+[Pipeline] sh
++ kubectl apply -f deployment.yaml
+deployment.apps/trend-store-deployment unchanged
+[Pipeline] sh
++ kubectl apply -f service.yaml
+service/trend-store-service unchanged
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Verify Deployment)
+[Pipeline] sh
++ kubectl get pods
+NAME                                      READY   STATUS    RESTARTS   AGE
+trend-app-6fc68c5f84-fdlnk                1/1     Running   0          3d2h
+trend-app-6fc68c5f84-npr5p                1/1     Running   0          3d2h
+trend-store-deployment-748c7955bb-9j9dr   1/1     Running   0          35m
+trend-store-deployment-748c7955bb-z2dzk   1/1     Running   0          35m
+[Pipeline] sh
++ kubectl get svc
+NAME                  TYPE           CLUSTER-IP       EXTERNAL-IP                                                               PORT(S)        AGE
+kubernetes            ClusterIP      10.100.0.1       <none>                                                                    443/TCP        3d2h
+trend-service         LoadBalancer   10.100.28.94     a66e5d74f2f254e8a9fd52c7fb6bd902-173048449.ap-south-1.elb.amazonaws.com   80:31075/TCP   3d2h
+trend-store-service   LoadBalancer   10.100.210.219   a89aabaf50e314ffb982243bde2d2756-772835347.ap-south-1.elb.amazonaws.com   80:30136/TCP   35m
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] End of Pipeline
+Finished: SUCCESS
