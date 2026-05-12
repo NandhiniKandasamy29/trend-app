@@ -4,7 +4,7 @@ pipeline {
     environment {
         DOCKER_IMAGE = "nandhini209/trend-store-app:latest"
         AWS_REGION = "ap-south-1"
-        EKS_CLUSTER = "trend-cluster
+        EKS_CLUSTER = "trend-cluster"
     }
 
     stages {
